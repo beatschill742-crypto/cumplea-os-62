@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celebración 62 Años</title>
+    
+    <!-- Etiquetas para compartir -->
+    <meta property="og:title" content="Mis 62 Años - Gran Celebración">
+    <meta property="og:description" content="Acompáñame a celebrar una noche inolvidable.">
+    <meta property="og:image" content="https://placehold.co/1200x630/0b132b/d4af37.png?text=62+Años">
+    <meta property="og:type" content="website">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Fuentes: Cormorant (Elegante/Clásica), Montserrat (Moderna/Lectura) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Paleta Azul Marino y Oro Clásico */
+            --navy-darkest: #050B14;
+            --navy-base: #0B132B;
+            --navy-light: #1C2541;
+            --gold-classic: #D4AF37;
+            --gold-light: #F3E5AB;
+            --gold-dark: #997A00;
+            --text-main: #E2E8F0;
+            --text-muted: #94A3B8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body, html {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--navy-darkest);
+            color: var(--text-main);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* --- FONDOS Y EFECTOS --- */
+        #ambient-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        .bg-gradient-overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(28, 37, 65, 0.8) 0%, rgba(5, 11, 20, 1) 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* --- PANTALLA DE INICIO (SOBRE) --- */
+        #intro-screen {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, var(--navy-base), var(--navy-darkest));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 1.2s;
+        }
+
+        #intro-screen.open {
+            transform: translateY(-100vh);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .envelope-card {
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            background: rgba(11, 19, 43, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 50px 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 20px rgba(212, 175, 55, 0.05);
+            max-width: 90%;
+            width: 400px;
+        }
+
+        .wax-seal {
+            width: 100px;
+            height: 100px;
+            margin: -100px auto 30px;
+            background: radial-gradient(circle at 30% 30%, #ffd700, var(--gold-classic), var(--gold-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 2px 5px rgba(255,255,255,0.5);
+            border: 2px solid rgba(255,255,255,0.2);
+            cursor: pointer;
+            transition: transform 0.4s ease;
+        }
+
+        .wax-seal:hover { transform: scale(1.08) rotate(5deg); box-shadow: 0 15px 25px rgba(212, 175, 55, 0.4); }
+
+        .wax-seal span {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.8rem;
+            color: var(--navy-darkest);
+            font-weight: 700;
+        }
+
+        /* --- CONTROL DE MÚSICA --- */
+        .music-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 55px;
+            height: 55px;
+            background: var(--navy-light);
+            border: 1px solid var(--gold-classic);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+            transition: all 0.3s ease;
+        }
+
+        .music-btn:hover { transform: scale(1.1); background: var(--gold-classic); }
+        .music-btn:hover svg { fill: var(--navy-darkest); }
+        .music-btn.playing { animation: pulseGold 2s infinite alternate; }
+        
+        @keyframes pulseGold {
+            0% { box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
+            100% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.6); }
+        }
+
+        .music-btn svg { width: 24px; height: 24px; fill: var(--gold-classic); transition: fill 0.3s; }
+
+        /* --- ESTRUCTURA PRINCIPAL --- */
+        .wrapper {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+            padding: 0 20px;
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 10px;
+            text-align: center;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .hero-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold-classic);
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(4.5rem, 12vw, 6.5rem);
+            color: var(--text-main);
+            line-height: 1;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .hero-title span {
+            color: var(--gold-classic);
+            font-style: italic;
+        }
+
+        .date-badge {
+            margin-top: 30px;
+            padding: 15px 35px;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 40px;
+            background: rgba(28, 37, 65, 0.4);
+            backdrop-filter: blur(5px);
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            color: var(--gold-light);
+            text-transform: uppercase;
+        }
+
+        .section-block {
+            padding: 80px 10px;
+            text-align: center;
+            position: relative;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 8vw, 3.2rem);
+            color: var(--gold-classic);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .section-subtitle {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-muted);
+            margin-bottom: 45px;
+        }
+
+        /* --- TARJETAS ELEGANTES --- */
+        .luxury-card {
+            background: linear-gradient(145deg, rgba(28, 37, 65, 0.6), rgba(11, 19, 43, 0.8));
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 12px;
+            padding: 40px 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            margin: 0 auto 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .luxury-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold-classic), transparent);
+        }
+
+        .icon-svg {
+            width: 50px;
+            height: 50px;
+            fill: var(--gold-classic);
+            margin-bottom: 15px;
+        }
+
+        /* --- BOTONES --- */
+        .btn-gold {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--gold-classic);
+            color: var(--navy-darkest);
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(212, 175, 55, 0.4);
+            background: var(--gold-light);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--gold-classic);
+            border: 1px solid var(--gold-classic);
+        }
+
+        .btn-outline:hover {
+            background: var(--gold-classic);
+            color: var(--navy-darkest);
+        }
+
+        /* --- FORMULARIOS --- */
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-label {
+            display: block; font-size: 0.75rem; text-transform: uppercase;
+            letter-spacing: 2px; color: var(--gold-classic); margin-bottom: 8px; font-weight: 600;
+        }
+        .form-input {
+            width: 100%; padding: 15px; border-radius: 6px;
+            border: 1px solid rgba(212, 175, 55, 0.3); 
+            background: rgba(5, 11, 20, 0.5);
+            color: var(--text-main); font-family: 'Montserrat', sans-serif; font-size: 0.95rem;
+            outline: none; transition: all 0.3s ease;
+        }
+        .form-input:focus { border-color: var(--gold-classic); box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
+        .form-input::placeholder { color: rgba(148, 163, 184, 0.5); }
+        .form-input option { background-color: var(--navy-darkest); color: var(--text-main); }
+
+        /* --- LISTAS DINÁMICAS (CANCIONES Y DESEOS) --- */
+        .dynamic-list {
+            display: grid;
+            gap: 15px;
+            margin-top: 25px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .dynamic-list::-webkit-scrollbar { width: 4px; }
+        .dynamic-list::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.3); border-radius: 10px; }
+
+        .list-item {
+            background: rgba(28, 37, 65, 0.4);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+            animation: fadeInItem 0.5s ease;
+        }
+
+        @keyframes fadeInItem { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- NUEVAS CLASES PARA GALERÍA Y ADORNOS LATERALES --- */
+        .side-frame {
+            position: fixed;
+            top: 20px; bottom: 20px;
+            width: 30px;
+            pointer-events: none;
+            z-index: 2;
+            border-top: 1px solid rgba(212, 175, 55, 0.6);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.6);
+            opacity: 0.5;
+        }
+        .side-frame.left { left: 20px; border-left: 1px solid rgba(212, 175, 55, 0.6); }
+        .side-frame.right { right: 20px; border-right: 1px solid rgba(212, 175, 55, 0.6); }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .gallery-item {
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            padding: 12px;
+            background: rgba(11, 19, 43, 0.7);
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            transition: transform 0.4s ease, border-color 0.4s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.03);
+            border-color: var(--gold-classic);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            filter: sepia(0.3) contrast(1.1) brightness(0.9);
+            display: block;
+        }
+
+        .collapse-container {
+            display: none;
+            margin-top: 25px;
+            animation: fadeInItem 0.6s ease;
+        }
+
+        /* Reveal Animation on Scroll */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 600px) {
+            .hero-title { font-size: 4rem; }
+            .luxury-card { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fondo Animado: Polvo de oro sutil -->
+    <div class="bg-gradient-overlay"></div>
+    <canvas id="ambient-canvas"></canvas>
+
+    <!-- Adornos Laterales Elegantes -->
+    <div class="side-frame left"></div>
+    <div class="side-frame right"></div>
+
+    <!-- Reproductor de Audio (Oculto) -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="cancion62.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="music-btn" id="music-btn" onclick="toggleMusic()">
+        <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+    </div>
+
+    <!-- PANTALLA DE INICIO (SOBRE ELEGANTE) -->
+    <div id="intro-screen">
+        <div class="envelope-card">
+            <div class="wax-seal" onclick="openInvitation()">
+                <span>R</span>
+            </div>
+            <p style="font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 4px; color: var(--gold-classic); text-transform: uppercase; margin-bottom: 25px;">Invitación Exclusiva</p>
+            <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; color: #fff; font-weight: 400; font-style: italic;" id="guest-name-display">
+                Estimado Invitado
+            </h2>
+            <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 30px; letter-spacing: 2px;">TOCA EL SELLO PARA ABRIR</p>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        
+        <!-- SECCIÓN PRINCIPAL -->
+        <section class="hero-section">
+            <p class="hero-subtitle">Celebra conmigo mis</p>
+            <h1 class="hero-title">62 <span>Años</span></h1>
+            <p style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--text-main); margin-top: 10px;">
+                Roberto Sánchez
+            </p>
+            
+            <div class="date-badge">
+                Sábado • 15 de Noviembre • 2026
+            </div>
+        </section>
+
+        <!-- SECCIÓN: ITINERARIO -->
+        <section class="section-block reveal">
+            <h2 class="section-title">La Velada</h2>
+            <p class="section-subtitle">Programa de la Noche</p>
+            
+            <div class="luxury-card">
+                <div style="border-left: 2px solid var(--gold-classic); padding-left: 20px; text-align: left; margin-bottom: 25px;">
+                    <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--gold-classic);">19:00 HRS</h4>
+                    <p style="font-size: 0.9rem; font-weight: 500; margin-top: 5px;">Recepción y Cóctel de Bienvenida</p>
+                </div>
+                <div style="border-left: 2px solid var(--gold-classic); padding-left: 20px; text-align: left; margin-bottom: 25px;">
+                    <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--gold-classic);">20:30 HRS</h4>
+                    <p style="font-size: 0.9rem; font-weight: 500; margin-top: 5px;">Cena y Brindis</p>
+                </div>
+                <div style="border-left: 2px solid var(--gold-classic); padding-left: 20px; text-align: left;">
+                    <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--gold-classic);">22:00 HRS</h4>
+                    <p style="font-size: 0.9rem; font-weight: 500; margin-top: 5px;">Música, Baile y Celebración</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: UBICACIÓN Y DRESS CODE -->
+        <section class="section-block reveal">
+            <h2 class="section-title">Ubicación</h2>
+            <p class="section-subtitle">Dónde nos encontraremos</p>
+            
+            <div class="luxury-card">
+                <!-- Icono Ubicación Vectorial -->
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+                
+                <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin-bottom: 15px;">Salón Diamante Real</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 25px;">
+                    Av. de los Insurgentes Sur 1234<br>
+                    Col. Del Valle, Ciudad de México.
+                </p>
+                
+                <a href="#" target="_blank" class="btn-gold btn-outline" style="width: 100%;">
+                    Abrir en Google Maps
+                </a>
+            </div>
+
+            <div class="luxury-card" style="margin-top: -10px;">
+                <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--gold-classic); margin-bottom: 10px;">Código de Vestimenta</h3>
+                <p style="font-size: 1.1rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;">Formal / Elegante</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: GALERÍA DE FOTOS (¡NUEVO!) -->
+        <section class="section-block reveal">
+            <h2 class="section-title">Memorias</h2>
+            <p class="section-subtitle">Momentos Inolvidables</p>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="foto1.jpg" onerror="this.src='https://placehold.co/400x500/0B132B/D4AF37?text=Memoria+1'" alt="Foto 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="foto2.jpg" onerror="this.src='https://placehold.co/400x500/0B132B/D4AF37?text=Memoria+2'" alt="Foto 2">
+                </div>
+                <div class="gallery-item">
+                    <img src="foto3.jpg" onerror="this.src='https://placehold.co/400x500/0B132B/D4AF37?text=Memoria+3'" alt="Foto 3">
+                </div>
+                <div class="gallery-item">
+                    <img src="foto4.jpg" onerror="this.src='https://placehold.co/400x500/0B132B/D4AF37?text=Memoria+4'" alt="Foto 4">
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: ROCKOLA / PETICIÓN DE CANCIONES (¡MODIFICADO!) -->
+        <section class="section-block reveal">
+            <h2 class="section-title">La Rockola</h2>
+            <p class="section-subtitle">Recomienda una canción para bailar</p>
+
+            <div class="luxury-card">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                <p style="font-size: 0.9rem; color: var(--text-main); margin-bottom: 25px;">¿Qué canción no puede faltar en la fiesta? Déjame tu recomendación.</p>
+                
+                <button type="button" class="btn-gold btn-outline" style="width: 100%;" onclick="document.getElementById('rockola-container').style.display='block'; this.style.display='none';">
+                    Sugerir una canción
+                </button>
+
+                <div id="rockola-container" class="collapse-container">
+                    <form id="song-form">
+                        <div class="form-group">
+                            <label class="form-label">Nombre de la Canción</label>
+                            <input type="text" id="song-name" class="form-input" placeholder="Ej. El Triste" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Artista / Grupo</label>
+                            <input type="text" id="song-artist" class="form-input" placeholder="Ej. José José" required>
+                        </div>
+                        <button type="submit" class="btn-gold" style="width: 100%;">Añadir a la Playlist</button>
+                    </form>
+
+                    <div class="dynamic-list" id="song-list">
+                        <!-- Lista de canciones local -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: MURO DE LOS DESEOS (¡MODIFICADO!) -->
+        <section class="section-block reveal">
+            <h2 class="section-title">Libro de Firmas</h2>
+            <p class="section-subtitle">Déjame un mensaje especial</p>
+
+            <div class="luxury-card">
+                <p style="font-size: 0.9rem; color: var(--text-main); margin-bottom: 25px;">Me encantaría leer tus palabras y buenos deseos para esta nueva vuelta al sol.</p>
+                
+                <button type="button" class="btn-gold btn-outline" style="width: 100%;" onclick="document.getElementById('wishes-container').style.display='block'; this.style.display='none';">
+                    Escribir Mensaje
+                </button>
+
+                <div id="wishes-container" class="collapse-container">
+                    <form id="wish-form">
+                        <div class="form-group">
+                            <label class="form-label">Tu Nombre</label>
+                            <input type="text" id="w-name" class="form-input" placeholder="Familia Pérez" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Tu Mensaje</label>
+                            <textarea id="w-msg" class="form-input" rows="3" placeholder="Escribe tus buenos deseos..." required style="resize: none;"></textarea>
+                        </div>
+                        <button type="submit" class="btn-gold" style="width: 100%;">Publicar Mensaje</button>
+                    </form>
+
+                    <div class="dynamic-list" id="wishes-list" style="margin-top: 30px;">
+                        <!-- Mensajes locales -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: CONFIRMACIÓN DE ASISTENCIA -->
+        <section class="section-block reveal" style="padding-bottom: 100px;">
+            <h2 class="section-title">Confirmación</h2>
+            <p class="section-subtitle">Espero contar con tu presencia</p>
+
+            <div class="luxury-card">
+                <button type="button" class="btn-gold" id="btn-reveal-rsvp" style="width: 100%;" onclick="document.getElementById('rsvp-container').style.display='block'; this.style.display='none';">
+                    Confirmar Asistencia
+                </button>
+
+                <div id="rsvp-container" style="display: none; animation: fadeInItem 0.6s ease;">
+                    <form id="rsvp-form">
+                        <div class="form-group">
+                            <label class="form-label">Nombre Completo</label>
+                            <input type="text" name="Nombre" id="rsvp-name" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">¿Asistirás?</label>
+                            <select name="Asistencia" class="form-input" required>
+                                <option value="" disabled selected>Selecciona una opción</option>
+                                <option value="Sí asisto">Sí, será un honor</option>
+                                <option value="No asisto">No podré asistir</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-gold" style="width: 100%;">Enviar Respuesta</button>
+                    </form>
+                </div>
+                
+                <div id="rsvp-success" style="display: none; margin-top: 20px;">
+                    <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--gold-classic);">¡Gracias!</h3>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Tu respuesta ha sido registrada.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // --- APERTURA Y MÚSICA ---
+        const audio = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-btn');
+        let audioInit = false;
+
+        function openInvitation() {
+            document.getElementById('intro-screen').classList.add('open');
+            startAudio();
+        }
+
+        function startAudio() {
+            if (audioInit || !audio) return;
+            // Configurar el segundo de inicio si se desea, ej: audio.currentTime = 10;
+            audio.play().then(() => {
+                audioInit = true;
+                musicBtn.classList.add('playing');
+            }).catch(() => { console.log('Interacción requerida'); });
+        }
+
+        function toggleMusic() {
+            if (!audioInit) { audioInit = true; }
+            if (audio.paused) {
+                audio.play();
+                musicBtn.classList.add('playing');
+            } else {
+                audio.pause();
+                musicBtn.classList.remove('playing');
+            }
+        }
+
+        // --- SISTEMA DE PARTÍCULAS (POLVO DE ORO) ---
+        const canvas = document.getElementById('ambient-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            for(let i=0; i<60; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 2 + 0.5,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: -(Math.random() * 0.5 + 0.2),
+                    alpha: Math.random()
+                });
+            }
+        }
+        initCanvas();
+        window.addEventListener('resize', initCanvas);
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for(let i = 0; i < particles.length; i++) {
+                let p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.alpha += (Math.random() - 0.5) * 0.02;
+                
+                if(p.alpha <= 0.1) p.alpha = 0.1;
+                if(p.alpha >= 0.8) p.alpha = 0.8;
+                if(p.y < 0) p.y = canvas.height;
+                if(p.x < 0) p.x = canvas.width;
+                if(p.x > canvas.width) p.x = 0;
+
+                ctx.globalAlpha = p.alpha;
+                ctx.fillStyle = '#D4AF37';
+                ctx.shadowBlur = 5;
+                ctx.shadowColor = '#D4AF37';
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // --- SCROLL REVEAL ---
+        function revealElements() {
+            let reveals = document.querySelectorAll('.reveal');
+            for (let i = 0; i < reveals.length; i++) {
+                let windowHeight = window.innerHeight;
+                let elementTop = reveals[i].getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) { reveals[i].classList.add('active'); }
+            }
+        }
+        window.addEventListener('scroll', revealElements);
+
+        // --- ENLACES PERSONALIZADOS ---
+        document.addEventListener("DOMContentLoaded", () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const invitado = urlParams.get('invitado');
+            
+            if (invitado) {
+                const guestDisplay = document.getElementById('guest-name-display');
+                if(guestDisplay) { guestDisplay.innerHTML = invitado; }
+                
+                const rsvpName = document.getElementById('rsvp-name');
+                if(rsvpName) { rsvpName.value = invitado; }
+            }
+        });
+
+        // --- LOGICA ROCKOLA (LocalStorage) ---
+        const songForm = document.getElementById('song-form');
+        const songList = document.getElementById('song-list');
+
+        function loadSongs() {
+            const songs = JSON.parse(localStorage.getItem('62_navy_songs')) || [];
+            songList.innerHTML = songs.map(s => `
+                <div class="list-item">
+                    <span style="display:block; color:var(--gold-classic); font-weight:600; font-size:1rem;">🎵 ${s.title}</span>
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Por: ${s.artist}</span>
+                </div>
+            `).join('');
+        }
+        loadSongs();
+
+        songForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const title = document.getElementById('song-name').value;
+            const artist = document.getElementById('song-artist').value;
+            const songs = JSON.parse(localStorage.getItem('62_navy_songs')) || [];
+            songs.unshift({ title, artist });
+            localStorage.setItem('62_navy_songs', JSON.stringify(songs));
+            loadSongs();
+            songForm.reset();
+        });
+
+        // --- LOGICA LIBRO DE FIRMAS (LocalStorage) ---
+        const wishForm = document.getElementById('wish-form');
+        const wishesList = document.getElementById('wishes-list');
+
+        function loadWishes() {
+            const wishes = JSON.parse(localStorage.getItem('62_navy_wishes')) || [];
+            wishesList.innerHTML = wishes.map(w => `
+                <div class="list-item">
+                    <span style="display:block; font-family:'Cormorant Garamond', serif; font-size:1.3rem; color:var(--gold-classic);">${w.name}</span>
+                    <span style="display:block; font-size:0.9rem; margin-top:5px; font-style:italic;">"${w.msg}"</span>
+                </div>
+            `).join('');
+        }
+        loadWishes();
+
+        wishForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('w-name').value;
+            const msg = document.getElementById('w-msg').value;
+            const wishes = JSON.parse(localStorage.getItem('62_navy_wishes')) || [];
+            wishes.unshift({ name, msg });
+            localStorage.setItem('62_navy_wishes', JSON.stringify(wishes));
+            loadWishes();
+            wishForm.reset();
+        });
+
+        // --- FORMULARIO RSVP (Simulado para catálogo, preparable para Google Sheets) ---
+        document.getElementById('rsvp-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button');
+            btn.innerText = "ENVIANDO...";
+            btn.disabled = true;
+
+            // Simulación de envío (Aquí va el Fetch de Google Sheets cuando tengas el link)
+            setTimeout(() => {
+                document.getElementById('rsvp-container').style.display = 'none';
+                document.getElementById('rsvp-success').style.display = 'block';
+            }, 1000);
+        });
+
+    </script>
+</body>
+</html>
