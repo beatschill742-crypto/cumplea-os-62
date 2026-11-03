@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Celebración 62 Años</title>
+    <title>Miguel González - Gran Celebración</title>
     
     <!-- Etiquetas para compartir -->
-    <meta property="og:title" content="Mis 62 Años - Gran Celebración">
+    <meta property="og:title" content="Miguel González - Gran Celebración">
     <meta property="og:description" content="Acompáñame a celebrar una noche inolvidable.">
-    <meta property="og:image" content="https://placehold.co/1200x630/0b132b/d4af37.png?text=62+Años">
+    <meta property="og:image" content="https://placehold.co/1200x630/0B132B/D4AF37.png?text=Gran+Celebración">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -183,6 +186,10 @@
         .hero-title span {
             color: var(--gold-classic);
             font-style: italic;
+            display: block;
+            font-size: clamp(3.5rem, 10vw, 5.5rem);
+            margin-top: 5px;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
         }
 
         .date-badge {
@@ -397,7 +404,7 @@
 
     <!-- Reproductor de Audio (Oculto) -->
     <audio id="bg-music" loop preload="auto">
-        <source src="cancion62.mp3" type="audio/mpeg">
+        <source src="pelotero.mp3" type="audio/mpeg">
     </audio>
 
     <div class="music-btn" id="music-btn" onclick="toggleMusic()">
@@ -408,7 +415,7 @@
     <div id="intro-screen">
         <div class="envelope-card">
             <div class="wax-seal" onclick="openInvitation()">
-                <span>R</span>
+                <span>M</span>
             </div>
             <p style="font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 4px; color: var(--gold-classic); text-transform: uppercase; margin-bottom: 25px;">Invitación Exclusiva</p>
             <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; color: #fff; font-weight: 400; font-style: italic;" id="guest-name-display">
@@ -422,11 +429,8 @@
         
         <!-- SECCIÓN PRINCIPAL -->
         <section class="hero-section">
-            <p class="hero-subtitle">Celebra conmigo mis</p>
-            <h1 class="hero-title">62 <span>Años</span></h1>
-            <p style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--text-main); margin-top: 10px;">
-                Roberto Sánchez
-            </p>
+            <p class="hero-subtitle">Edición Exclusiva • Gran Celebración</p>
+            <h1 class="hero-title">Miguel<br><span>González</span></h1>
             
             <div class="date-badge">
                 Sábado • 15 de Noviembre • 2026
@@ -477,6 +481,34 @@
             <div class="luxury-card" style="margin-top: -10px;">
                 <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--gold-classic); margin-bottom: 10px;">Código de Vestimenta</h3>
                 <p style="font-size: 1.1rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;">Formal / Elegante</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: OBSEQUIOS (BANORTE) -->
+        <section class="section-block reveal">
+            <h2 class="section-title">Obsequios</h2>
+            <p class="section-subtitle">Un detalle especial</p>
+            
+            <div class="luxury-card">
+                <!-- Icono de Sobre/Regalo -->
+                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="var(--gold-classic)" stroke-width="1.5">
+                    <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+                    <path d="M2 4l10 8 10-8"></path>
+                </svg>
+                
+                <p style="font-size: 1.05rem; color: var(--text-main); margin-bottom: 20px; line-height: 1.5;">
+                    El mejor regalo que puedo recibir es contar con tu presencia.
+                </p>
+                <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 30px;">
+                    En caso de desear tener un detalle adicional y no saber qué elegir, pongo a tu disposición mi número de cuenta bancaria:
+                </p>
+                
+                <div style="background: rgba(5, 11, 20, 0.5); padding: 25px; border-radius: 8px; border-left: 3px solid var(--gold-classic); display: inline-block; text-align: left; box-shadow: inset 0 0 20px rgba(0,0,0,0.4);">
+                    <p style="color: var(--gold-classic); font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; margin-bottom: 8px; letter-spacing: 1px;">Banorte</p>
+                    <p style="font-size: 1.2rem; font-weight: 700; letter-spacing: 3px; color: var(--text-main);">
+                        4189 1430 9469 7771
+                    </p>
+                </div>
             </div>
         </section>
 
@@ -616,7 +648,8 @@
 
         function startAudio() {
             if (audioInit || !audio) return;
-            // Configurar el segundo de inicio si se desea, ej: audio.currentTime = 10;
+            // Configurar el segundo de inicio
+            audio.currentTime = 13;
             audio.play().then(() => {
                 audioInit = true;
                 musicBtn.classList.add('playing');
@@ -624,7 +657,10 @@
         }
 
         function toggleMusic() {
-            if (!audioInit) { audioInit = true; }
+            if (!audioInit) { 
+                audio.currentTime = 13;
+                audioInit = true; 
+            }
             if (audio.paused) {
                 audio.play();
                 musicBtn.classList.add('playing');
@@ -713,7 +749,7 @@
         const songList = document.getElementById('song-list');
 
         function loadSongs() {
-            const songs = JSON.parse(localStorage.getItem('62_navy_songs')) || [];
+            const songs = JSON.parse(localStorage.getItem('miguel_navy_songs')) || [];
             songList.innerHTML = songs.map(s => `
                 <div class="list-item">
                     <span style="display:block; color:var(--gold-classic); font-weight:600; font-size:1rem;">🎵 ${s.title}</span>
@@ -727,9 +763,9 @@
             e.preventDefault();
             const title = document.getElementById('song-name').value;
             const artist = document.getElementById('song-artist').value;
-            const songs = JSON.parse(localStorage.getItem('62_navy_songs')) || [];
+            const songs = JSON.parse(localStorage.getItem('miguel_navy_songs')) || [];
             songs.unshift({ title, artist });
-            localStorage.setItem('62_navy_songs', JSON.stringify(songs));
+            localStorage.setItem('miguel_navy_songs', JSON.stringify(songs));
             loadSongs();
             songForm.reset();
         });
@@ -739,7 +775,7 @@
         const wishesList = document.getElementById('wishes-list');
 
         function loadWishes() {
-            const wishes = JSON.parse(localStorage.getItem('62_navy_wishes')) || [];
+            const wishes = JSON.parse(localStorage.getItem('miguel_navy_wishes')) || [];
             wishesList.innerHTML = wishes.map(w => `
                 <div class="list-item">
                     <span style="display:block; font-family:'Cormorant Garamond', serif; font-size:1.3rem; color:var(--gold-classic);">${w.name}</span>
@@ -753,9 +789,9 @@
             e.preventDefault();
             const name = document.getElementById('w-name').value;
             const msg = document.getElementById('w-msg').value;
-            const wishes = JSON.parse(localStorage.getItem('62_navy_wishes')) || [];
+            const wishes = JSON.parse(localStorage.getItem('miguel_navy_wishes')) || [];
             wishes.unshift({ name, msg });
-            localStorage.setItem('62_navy_wishes', JSON.stringify(wishes));
+            localStorage.setItem('miguel_navy_wishes', JSON.stringify(wishes));
             loadWishes();
             wishForm.reset();
         });
