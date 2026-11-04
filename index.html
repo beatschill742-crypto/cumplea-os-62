@@ -3,151 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Miguel González - Gran Celebración</title>
+    <title>Roberto Sánchez - 62 Años</title>
     
     <!-- Etiquetas para compartir -->
-    <meta property="og:title" content="Miguel González - Gran Celebración">
-    <meta property="og:description" content="Acompáñame a celebrar una noche inolvidable.">
-    <meta property="og:image" content="https://placehold.co/1200x630/0B132B/D4AF37.png?text=Gran+Celebración">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:title" content="Roberto Sánchez - 62 Años">
+    <meta property="og:description" content="Estás invitado a una velada excepcional.">
+    <meta property="og:image" content="https://placehold.co/1200x630/111111/d97736.png?text=Edición+62+Años">
     <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Fuentes: Cormorant (Elegante/Clásica), Montserrat (Moderna/Lectura) -->
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Fuentes: Prata (Elegancia clásica) y Lato (Lectura moderna) -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Prata&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* Paleta Azul Marino y Oro Clásico */
-            --navy-darkest: #050B14;
-            --navy-base: #0B132B;
-            --navy-light: #1C2541;
-            --gold-classic: #D4AF37;
-            --gold-light: #F3E5AB;
-            --gold-dark: #997A00;
-            --text-main: #E2E8F0;
-            --text-muted: #94A3B8;
+            /* Paleta Whiskey Lounge / Reserva Especial */
+            --bg-black: #080808;
+            --bg-charcoal: #141414;
+            --bg-brown: #241913;
+            --amber-glow: #d97736;
+            --copper-dark: #8c4217;
+            --bronze-light: #e8a97b;
+            --text-light: #f0f0f0;
+            --text-muted: #888888;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body, html {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--navy-darkest);
-            color: var(--text-main);
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-black);
+            color: var(--text-light);
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
-        /* --- FONDOS Y EFECTOS --- */
-        #ambient-canvas {
+        /* --- GLOBOS FLOTANTES LATERALES --- */
+        #side-balloons-container {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 5;
+            overflow: hidden;
+        }
+
+        .rising-balloon-wrap {
+            position: absolute;
+            bottom: -200px;
+            animation: riseUpContinuous linear forwards;
+            will-change: transform;
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.8));
+        }
+
+        @keyframes riseUpContinuous {
+            0% { transform: translateY(0) translateX(0) rotate(-4deg); opacity: 0; }
+            5% { opacity: 0.9; }
+            50% { transform: translateY(-60vh) translateX(20px) rotate(4deg); }
+            95% { opacity: 0.9; }
+            100% { transform: translateY(-130vh) translateX(-15px) rotate(-4deg); opacity: 0; }
+        }
+
+        /* --- FONDOS Y EFECTOS VFX (BRASAS Y HUMO) --- */
+        #embers-canvas {
             position: fixed;
             inset: 0;
             width: 100vw;
             height: 100vh;
             pointer-events: none;
             z-index: 1;
-            opacity: 0.6;
+            opacity: 0.8;
+            mix-blend-mode: screen;
         }
 
-        .bg-gradient-overlay {
+        .vintage-overlay {
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle at 50% 0%, rgba(28, 37, 65, 0.8) 0%, rgba(5, 11, 20, 1) 70%);
-            z-index: 0;
+            /* Efecto viñeta y textura oscura */
+            background: radial-gradient(circle at center, transparent 20%, rgba(8, 8, 8, 0.95) 90%);
             pointer-events: none;
+            z-index: 2;
         }
 
-        /* --- PANTALLA DE INICIO (SOBRE) --- */
+        /* --- PANTALLA DE INICIO (LA CARTA) --- */
         #intro-screen {
             position: fixed;
             inset: 0;
-            background: linear-gradient(135deg, var(--navy-base), var(--navy-darkest));
+            background: var(--bg-black);
+            background-image: radial-gradient(circle at top right, var(--bg-brown), var(--bg-black) 70%);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 1.2s;
+            transition: opacity 1.5s ease, visibility 1.5s;
         }
 
         #intro-screen.open {
-            transform: translateY(-100vh);
             opacity: 0;
-            pointer-events: none;
+            visibility: hidden;
         }
 
-        .envelope-card {
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            background: rgba(11, 19, 43, 0.6);
-            backdrop-filter: blur(10px);
-            padding: 50px 30px;
-            border-radius: 12px;
+        .invitation-plate {
+            background: var(--bg-charcoal);
+            border: 1px solid var(--copper-dark);
+            padding: 50px 40px;
+            border-radius: 4px;
             text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 20px rgba(212, 175, 55, 0.05);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.9), inset 0 0 40px rgba(217, 119, 54, 0.05);
             max-width: 90%;
-            width: 400px;
+            width: 420px;
+            position: relative;
         }
 
-        .wax-seal {
-            width: 100px;
-            height: 100px;
-            margin: -100px auto 30px;
-            background: radial-gradient(circle at 30% 30%, #ffd700, var(--gold-classic), var(--gold-dark));
-            border-radius: 50%;
+        /* Adornos esquineros del plato */
+        .invitation-plate::before, .invitation-plate::after {
+            content: ''; position: absolute; width: 20px; height: 20px; border: 1px solid var(--amber-glow);
+        }
+        .invitation-plate::before { top: 15px; left: 15px; border-right: none; border-bottom: none; }
+        .invitation-plate::after { bottom: 15px; right: 15px; border-left: none; border-top: none; }
+
+        .leather-stamp {
+            width: 80px;
+            height: 80px;
+            margin: -90px auto 35px;
+            background: linear-gradient(135deg, var(--bg-black), var(--bg-brown));
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 2px 5px rgba(255,255,255,0.5);
-            border: 2px solid rgba(255,255,255,0.2);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.8);
+            border: 2px solid var(--copper-dark);
             cursor: pointer;
-            transition: transform 0.4s ease;
+            transition: all 0.4s ease;
+            transform: rotate(45deg);
         }
 
-        .wax-seal:hover { transform: scale(1.08) rotate(5deg); box-shadow: 0 15px 25px rgba(212, 175, 55, 0.4); }
+        .leather-stamp:hover {
+            border-color: var(--amber-glow);
+            box-shadow: 0 0 30px rgba(217, 119, 54, 0.4);
+        }
 
-        .wax-seal span {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.8rem;
-            color: var(--navy-darkest);
-            font-weight: 700;
+        .leather-stamp span {
+            font-family: 'Prata', serif;
+            font-size: 2.2rem;
+            color: var(--amber-glow);
+            transform: rotate(-45deg); /* Contrarrestar la rotación del contenedor */
         }
 
         /* --- CONTROL DE MÚSICA --- */
         .music-btn {
             position: fixed;
-            bottom: 25px;
-            right: 25px;
-            width: 55px;
-            height: 55px;
-            background: var(--navy-light);
-            border: 1px solid var(--gold-classic);
-            border-radius: 50%;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid var(--copper-dark);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
             transition: all 0.3s ease;
         }
 
-        .music-btn:hover { transform: scale(1.1); background: var(--gold-classic); }
-        .music-btn:hover svg { fill: var(--navy-darkest); }
-        .music-btn.playing { animation: pulseGold 2s infinite alternate; }
-        
-        @keyframes pulseGold {
-            0% { box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
-            100% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.6); }
+        .music-btn:hover, .music-btn.playing { 
+            border-color: var(--amber-glow); 
+            box-shadow: 0 0 20px rgba(217, 119, 54, 0.3); 
         }
-
-        .music-btn svg { width: 24px; height: 24px; fill: var(--gold-classic); transition: fill 0.3s; }
+        .music-btn svg { width: 20px; height: 20px; fill: var(--bronze-light); transition: fill 0.3s; }
+        .music-btn.playing svg { fill: var(--amber-glow); }
 
         /* --- ESTRUCTURA PRINCIPAL --- */
         .wrapper {
-            max-width: 700px;
+            max-width: 650px;
             margin: 0 auto;
             position: relative;
             z-index: 10;
@@ -160,268 +192,230 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 60px 10px;
+            padding: 80px 10px 40px;
             text-align: center;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
         }
 
-        .hero-subtitle {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.85rem;
-            letter-spacing: 5px;
+        .badge-edition {
+            font-size: 0.75rem;
+            letter-spacing: 6px;
             text-transform: uppercase;
-            color: var(--gold-classic);
-            margin-bottom: 20px;
+            color: var(--bronze-light);
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--copper-dark);
+            padding-bottom: 10px;
         }
 
         .hero-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(4.5rem, 12vw, 6.5rem);
-            color: var(--text-main);
-            line-height: 1;
-            margin-bottom: 15px;
-            font-weight: 600;
+            font-family: 'Prata', serif;
+            font-size: clamp(3.5rem, 10vw, 5.5rem);
+            color: var(--text-light);
+            line-height: 1.1;
+            margin-bottom: 20px;
         }
 
         .hero-title span {
-            color: var(--gold-classic);
-            font-style: italic;
+            color: var(--amber-glow);
             display: block;
-            font-size: clamp(3.5rem, 10vw, 5.5rem);
-            margin-top: 5px;
-            text-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+            font-size: clamp(5rem, 15vw, 8rem);
+            margin-top: -10px;
+            text-shadow: 0 0 40px rgba(217, 119, 54, 0.4);
         }
 
-        .date-badge {
-            margin-top: 30px;
-            padding: 15px 35px;
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            border-radius: 40px;
-            background: rgba(28, 37, 65, 0.4);
-            backdrop-filter: blur(5px);
-            font-size: 1.1rem;
-            letter-spacing: 3px;
-            color: var(--gold-light);
-            text-transform: uppercase;
+        .separator-svg {
+            width: 200px;
+            height: 30px;
+            margin: 20px auto;
+            fill: var(--copper-dark);
         }
 
         .section-block {
-            padding: 80px 10px;
+            padding: 70px 10px;
             text-align: center;
             position: relative;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
         }
 
         .section-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2.5rem, 8vw, 3.2rem);
-            color: var(--gold-classic);
-            margin-bottom: 10px;
-            font-weight: 600;
+            font-family: 'Prata', serif;
+            font-size: clamp(2.2rem, 7vw, 3rem);
+            color: var(--bronze-light);
+            margin-bottom: 5px;
         }
 
         .section-subtitle {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--text-muted);
-            margin-bottom: 45px;
+            letter-spacing: 4px;
+            color: var(--copper-dark);
+            margin-bottom: 40px;
+            font-weight: 700;
         }
 
-        /* --- TARJETAS ELEGANTES --- */
-        .luxury-card {
-            background: linear-gradient(145deg, rgba(28, 37, 65, 0.6), rgba(11, 19, 43, 0.8));
-            border: 1px solid rgba(212, 175, 55, 0.25);
-            border-radius: 12px;
-            padding: 40px 25px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-            margin: 0 auto 30px;
+        /* --- TARJETAS ESTILO CAVA / LOUNGE --- */
+        .lounge-card {
+            background: rgba(20, 20, 20, 0.7);
+            border: 1px solid rgba(140, 66, 23, 0.3);
+            padding: 45px 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            margin: 0 auto 35px;
             position: relative;
-            overflow: hidden;
+            backdrop-filter: blur(8px);
         }
 
-        .luxury-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 3px;
-            background: linear-gradient(90deg, transparent, var(--gold-classic), transparent);
+        /* Adornos de línea en la tarjeta */
+        .lounge-card::before {
+            content: ''; position: absolute; inset: 6px; 
+            border: 1px dashed rgba(217, 119, 54, 0.15); pointer-events: none;
         }
 
         .icon-svg {
-            width: 50px;
-            height: 50px;
-            fill: var(--gold-classic);
-            margin-bottom: 15px;
+            width: 45px;
+            height: 45px;
+            fill: var(--amber-glow);
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(217, 119, 54, 0.4));
         }
 
         /* --- BOTONES --- */
-        .btn-gold {
+        .btn-amber {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            background: var(--gold-classic);
-            color: var(--navy-darkest);
-            padding: 15px 30px;
-            border-radius: 30px;
+            background: transparent;
+            color: var(--amber-glow);
+            padding: 16px 32px;
             font-weight: 700;
-            font-size: 0.85rem;
-            letter-spacing: 2px;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
             text-decoration: none;
             cursor: pointer;
-            border: none;
+            border: 1px solid var(--amber-glow);
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
+            position: relative;
+            overflow: hidden;
         }
 
-        .btn-gold:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(212, 175, 55, 0.4);
-            background: var(--gold-light);
+        .btn-amber::before {
+            content: ''; position: absolute; inset: 0; background: var(--amber-glow);
+            transform: scaleX(0); transform-origin: right; transition: transform 0.4s ease; z-index: -1;
         }
 
-        .btn-outline {
-            background: transparent;
-            color: var(--gold-classic);
-            border: 1px solid var(--gold-classic);
-        }
+        .btn-amber:hover { color: var(--bg-black); box-shadow: 0 0 25px rgba(217, 119, 54, 0.5); border-color: transparent;}
+        .btn-amber:hover::before { transform: scaleX(1); transform-origin: left; }
 
-        .btn-outline:hover {
-            background: var(--gold-classic);
-            color: var(--navy-darkest);
-        }
-
-        /* --- FORMULARIOS --- */
-        .form-group { margin-bottom: 20px; text-align: left; }
+        /* --- FORMULARIOS Y CAJAS DE TEXTO --- */
+        .form-group { margin-bottom: 25px; text-align: left; }
         .form-label {
-            display: block; font-size: 0.75rem; text-transform: uppercase;
-            letter-spacing: 2px; color: var(--gold-classic); margin-bottom: 8px; font-weight: 600;
+            display: block; font-size: 0.7rem; text-transform: uppercase;
+            letter-spacing: 2px; color: var(--bronze-light); margin-bottom: 10px; font-weight: 700;
         }
         .form-input {
-            width: 100%; padding: 15px; border-radius: 6px;
-            border: 1px solid rgba(212, 175, 55, 0.3); 
-            background: rgba(5, 11, 20, 0.5);
-            color: var(--text-main); font-family: 'Montserrat', sans-serif; font-size: 0.95rem;
+            width: 100%; padding: 16px; 
+            border: none; border-bottom: 1px solid var(--copper-dark);
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text-light); font-family: 'Lato', sans-serif; font-size: 1rem;
             outline: none; transition: all 0.3s ease;
         }
-        .form-input:focus { border-color: var(--gold-classic); box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
-        .form-input::placeholder { color: rgba(148, 163, 184, 0.5); }
-        .form-input option { background-color: var(--navy-darkest); color: var(--text-main); }
+        .form-input:focus { border-bottom-color: var(--amber-glow); background: rgba(217, 119, 54, 0.05); }
+        .form-input::placeholder { color: rgba(136, 136, 136, 0.4); }
+        .form-input option { background-color: var(--bg-black); color: var(--text-light); }
 
-        /* --- LISTAS DINÁMICAS (CANCIONES Y DESEOS) --- */
+        /* --- LISTAS DINÁMICAS --- */
         .dynamic-list {
-            display: grid;
-            gap: 15px;
-            margin-top: 25px;
-            max-height: 400px;
-            overflow-y: auto;
-            padding-right: 5px;
+            display: grid; gap: 15px; margin-top: 30px; max-height: 400px; overflow-y: auto; padding-right: 5px;
         }
-
-        .dynamic-list::-webkit-scrollbar { width: 4px; }
-        .dynamic-list::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.3); border-radius: 10px; }
+        .dynamic-list::-webkit-scrollbar { width: 3px; }
+        .dynamic-list::-webkit-scrollbar-thumb { background: var(--copper-dark); }
 
         .list-item {
-            background: rgba(28, 37, 65, 0.4);
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            padding: 15px;
-            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.4);
+            border-left: 2px solid var(--amber-glow);
+            padding: 20px;
             text-align: left;
             animation: fadeInItem 0.5s ease;
         }
 
         @keyframes fadeInItem { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- NUEVAS CLASES PARA GALERÍA Y ADORNOS LATERALES --- */
-        .side-frame {
-            position: fixed;
-            top: 20px; bottom: 20px;
-            width: 30px;
-            pointer-events: none;
-            z-index: 2;
-            border-top: 1px solid rgba(212, 175, 55, 0.6);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.6);
-            opacity: 0.5;
-        }
-        .side-frame.left { left: 20px; border-left: 1px solid rgba(212, 175, 55, 0.6); }
-        .side-frame.right { right: 20px; border-right: 1px solid rgba(212, 175, 55, 0.6); }
-
+        /* --- GALERÍA EN TONOS CÁLIDOS --- */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
+            gap: 25px;
             margin-top: 30px;
         }
         
         .gallery-item {
-            border: 2px solid rgba(212, 175, 55, 0.3);
-            padding: 12px;
-            background: rgba(11, 19, 43, 0.7);
-            border-radius: 8px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            position: relative;
+            padding: 8px;
+            background: var(--bg-charcoal);
+            border: 1px solid rgba(140, 66, 23, 0.3);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.9);
             transition: transform 0.4s ease, border-color 0.4s ease;
         }
         
         .gallery-item:hover {
-            transform: scale(1.03);
-            border-color: var(--gold-classic);
+            transform: scale(1.05);
+            border-color: var(--amber-glow);
+            z-index: 5;
         }
         
         .gallery-item img {
             width: 100%;
             height: auto;
-            border-radius: 4px;
-            filter: sepia(0.3) contrast(1.1) brightness(0.9);
             display: block;
+            /* Filtro cálido para dar sensación vintage/whiskey */
+            filter: sepia(0.4) contrast(1.2) brightness(0.85);
+            transition: filter 0.4s ease;
         }
 
-        .collapse-container {
-            display: none;
-            margin-top: 25px;
-            animation: fadeInItem 0.6s ease;
-        }
+        .gallery-item:hover img { filter: sepia(0) contrast(1.1) brightness(1); }
 
-        /* Reveal Animation on Scroll */
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s ease; }
+        .collapse-container { display: none; margin-top: 35px; animation: fadeInItem 0.6s ease; }
+
+        /* Scroll Reveal Animation */
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         @media (max-width: 600px) {
-            .hero-title { font-size: 4rem; }
-            .luxury-card { padding: 30px 20px; }
+            .invitation-plate { padding: 40px 20px; }
+            .hero-title { font-size: 3rem; }
+            .hero-title span { font-size: 5rem; }
+            .lounge-card { padding: 35px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Fondo Animado: Polvo de oro sutil -->
-    <div class="bg-gradient-overlay"></div>
-    <canvas id="ambient-canvas"></canvas>
-
-    <!-- Adornos Laterales Elegantes -->
-    <div class="side-frame left"></div>
-    <div class="side-frame right"></div>
+    <!-- Fondo Animado: Brasas y Humo -->
+    <div class="vintage-overlay"></div>
+    <canvas id="embers-canvas"></canvas>
+    
+    <!-- Globos Flotantes Metálicos -->
+    <div id="side-balloons-container"></div>
 
     <!-- Reproductor de Audio (Oculto) -->
     <audio id="bg-music" loop preload="auto">
-        <source src="pelotero.mp3" type="audio/mpeg">
+        <source src="cancion62.mp3" type="audio/mpeg">
     </audio>
 
     <div class="music-btn" id="music-btn" onclick="toggleMusic()">
         <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
     </div>
 
-    <!-- PANTALLA DE INICIO (SOBRE ELEGANTE) -->
+    <!-- PANTALLA DE INICIO (LA CARTA) -->
     <div id="intro-screen">
-        <div class="envelope-card">
-            <div class="wax-seal" onclick="openInvitation()">
-                <span>M</span>
+        <div class="invitation-plate">
+            <div class="leather-stamp" onclick="openInvitation()">
+                <span>R</span>
             </div>
-            <p style="font-family: 'Montserrat', sans-serif; font-size: 0.8rem; letter-spacing: 4px; color: var(--gold-classic); text-transform: uppercase; margin-bottom: 25px;">Invitación Exclusiva</p>
-            <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; color: #fff; font-weight: 400; font-style: italic;" id="guest-name-display">
+            <p style="font-family: 'Lato', sans-serif; font-size: 0.7rem; letter-spacing: 5px; color: var(--bronze-light); text-transform: uppercase; margin-bottom: 20px;">Reserva Especial</p>
+            <h2 style="font-family: 'Prata', serif; font-size: 2rem; color: #fff; font-weight: 400; line-height: 1.3;" id="guest-name-display">
                 Estimado Invitado
             </h2>
-            <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 30px; letter-spacing: 2px;">TOCA EL SELLO PARA ABRIR</p>
+            <p style="font-size: 0.65rem; color: var(--copper-dark); margin-top: 35px; letter-spacing: 3px;">TOCA EL SELLO PARA DESCUBRIR</p>
         </div>
     </div>
 
@@ -429,58 +423,79 @@
         
         <!-- SECCIÓN PRINCIPAL -->
         <section class="hero-section">
-            <p class="hero-subtitle">Edición Exclusiva • Gran Celebración</p>
-            <h1 class="hero-title">Miguel<br><span>González</span></h1>
+            <p class="badge-edition">Edición Limitada • 1964</p>
+            <h1 class="hero-title">Roberto Sánchez<br><span>62</span></h1>
             
-            <div class="date-badge">
-                Sábado • 15 de Noviembre • 2026
-            </div>
+            <svg class="separator-svg" viewBox="0 0 200 30" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10,15 L90,15 M110,15 L190,15" stroke="currentColor" stroke-width="1"/>
+                <polygon points="100,8 105,15 100,22 95,15" fill="currentColor"/>
+            </svg>
+
+            <p style="font-family: 'Prata', serif; font-size: 1.4rem; color: var(--text-light); margin-top: 10px;">
+                Un brindis por la vida y los buenos momentos.
+            </p>
+            
+            <p style="font-size: 0.9rem; letter-spacing: 3px; color: var(--amber-glow); text-transform: uppercase; margin-top: 40px;">
+                Sábado 15 de Noviembre • 2026
+            </p>
         </section>
 
         <!-- SECCIÓN: ITINERARIO -->
         <section class="section-block reveal">
-            <h2 class="section-title">La Velada</h2>
-            <p class="section-subtitle">Programa de la Noche</p>
+            <h2 class="section-title">El Itinerario</h2>
+            <p class="section-subtitle">Programa de la Velada</p>
             
-            <div class="luxury-card">
-                <div style="border-left: 2px solid var(--gold-classic); padding-left: 20px; text-align: left; margin-bottom: 25px;">
-                    <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--gold-classic);">19:00 HRS</h4>
-                    <p style="font-size: 0.9rem; font-weight: 500; margin-top: 5px;">Recepción y Cóctel de Bienvenida</p>
+            <div class="lounge-card">
+                <div style="text-align: left; margin-bottom: 30px; position: relative; padding-left: 25px;">
+                    <div style="position: absolute; left: 0; top: 5px; bottom: -30px; width: 1px; background: var(--copper-dark);"></div>
+                    <div style="position: absolute; left: -4px; top: 8px; width: 9px; height: 9px; background: var(--amber-glow); transform: rotate(45deg);"></div>
+                    
+                    <h4 style="font-family: 'Prata', serif; font-size: 1.5rem; color: var(--amber-glow);">19:00 HRS</h4>
+                    <p style="font-size: 0.95rem; color: var(--text-light); margin-top: 8px;">Recepción y Bienvenida. Disfruta de un trago en la barra.</p>
                 </div>
-                <div style="border-left: 2px solid var(--gold-classic); padding-left: 20px; text-align: left; margin-bottom: 25px;">
-                    <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--gold-classic);">20:30 HRS</h4>
-                    <p style="font-size: 0.9rem; font-weight: 500; margin-top: 5px;">Cena y Brindis</p>
+
+                <div style="text-align: left; margin-bottom: 30px; position: relative; padding-left: 25px;">
+                    <div style="position: absolute; left: 0; top: 5px; bottom: -30px; width: 1px; background: var(--copper-dark);"></div>
+                    <div style="position: absolute; left: -4px; top: 8px; width: 9px; height: 9px; background: var(--amber-glow); transform: rotate(45deg);"></div>
+                    
+                    <h4 style="font-family: 'Prata', serif; font-size: 1.5rem; color: var(--amber-glow);">20:30 HRS</h4>
+                    <p style="font-size: 0.95rem; color: var(--text-light); margin-top: 8px;">Banquete, corte de carne y el gran brindis.</p>
                 </div>
-                <div style="border-left: 2px solid var(--gold-classic); padding-left: 20px; text-align: left;">
-                    <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--gold-classic);">22:00 HRS</h4>
-                    <p style="font-size: 0.9rem; font-weight: 500; margin-top: 5px;">Música, Baile y Celebración</p>
+
+                <div style="text-align: left; position: relative; padding-left: 25px;">
+                    <div style="position: absolute; left: -4px; top: 8px; width: 9px; height: 9px; background: var(--amber-glow); transform: rotate(45deg);"></div>
+                    
+                    <h4 style="font-family: 'Prata', serif; font-size: 1.5rem; color: var(--amber-glow);">22:00 HRS</h4>
+                    <p style="font-size: 0.95rem; color: var(--text-light); margin-top: 8px;">Música en vivo, puros y celebración continua.</p>
                 </div>
             </div>
         </section>
 
         <!-- SECCIÓN: UBICACIÓN Y DRESS CODE -->
         <section class="section-block reveal">
-            <h2 class="section-title">Ubicación</h2>
-            <p class="section-subtitle">Dónde nos encontraremos</p>
+            <h2 class="section-title">El Lugar</h2>
+            <p class="section-subtitle">Punto de encuentro</p>
             
-            <div class="luxury-card">
-                <!-- Icono Ubicación Vectorial -->
-                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            <div class="lounge-card">
+                <svg class="icon-svg" viewBox="0 0 24 24">
+                    <path d="M12 21C8.13 21 5 17.87 5 14c0-3.33 2.1-6.19 5.09-7.44L12 2l1.91 4.56C16.9 7.81 19 10.67 19 14c0 3.87-3.13 7-7 7z M12 4.4L10.8 7.23C8.63 8.16 7 10.88 7 14c0 2.76 2.24 5 5 5s5-2.24 5-5c0-3.12-1.63-5.84-3.8-6.77L12 4.4z"/>
+                    <path d="M7.5 14c0 2.48 2.02 4.5 4.5 4.5S16.5 16.48 16.5 14" opacity="0.3"/>
+                </svg>
                 
-                <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin-bottom: 15px;">Salón Diamante Real</h3>
-                <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 25px;">
-                    Av. de los Insurgentes Sur 1234<br>
-                    Col. Del Valle, Ciudad de México.
+                <h3 style="font-family: 'Prata', serif; font-size: 1.7rem; margin-bottom: 12px; color: var(--text-light);">Jardín Los Laureles</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 30px;">
+                    Naucalpan de Juárez,<br>
+                    Estado de México.
                 </p>
                 
-                <a href="#" target="_blank" class="btn-gold btn-outline" style="width: 100%;">
-                    Abrir en Google Maps
+                <a href="https://www.google.com/maps/search/?api=1&query=Jard%C3%ADn+Los+Laureles%2C+Naucalpan+de+Ju%C3%A1rez" target="_blank" class="btn-amber" style="width: 100%;">
+                    Abrir Mapa
                 </a>
             </div>
 
-            <div class="luxury-card" style="margin-top: -10px;">
-                <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--gold-classic); margin-bottom: 10px;">Código de Vestimenta</h3>
-                <p style="font-size: 1.1rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;">Formal / Elegante</p>
+            <div class="lounge-card" style="padding: 30px;">
+                <h3 style="font-family: 'Prata', serif; font-size: 1.3rem; color: var(--bronze-light); margin-bottom: 8px;">Dress Code</h3>
+                <p style="font-size: 1rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;">Formal / Elegante</p>
             </div>
         </section>
 
@@ -489,74 +504,52 @@
             <h2 class="section-title">Obsequios</h2>
             <p class="section-subtitle">Un detalle especial</p>
             
-            <div class="luxury-card">
-                <!-- Icono de Sobre/Regalo -->
-                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="var(--gold-classic)" stroke-width="1.5">
+            <div class="lounge-card">
+                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="var(--amber-glow)" stroke-width="1.5">
                     <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
                     <path d="M2 4l10 8 10-8"></path>
                 </svg>
                 
-                <p style="font-size: 1.05rem; color: var(--text-main); margin-bottom: 20px; line-height: 1.5;">
+                <p style="font-size: 1.05rem; color: var(--text-light); margin-bottom: 20px; line-height: 1.5;">
                     El mejor regalo que puedo recibir es contar con tu presencia.
                 </p>
                 <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 30px;">
                     En caso de desear tener un detalle adicional y no saber qué elegir, pongo a tu disposición mi número de cuenta bancaria:
                 </p>
                 
-                <div style="background: rgba(5, 11, 20, 0.5); padding: 25px; border-radius: 8px; border-left: 3px solid var(--gold-classic); display: inline-block; text-align: left; box-shadow: inset 0 0 20px rgba(0,0,0,0.4);">
-                    <p style="color: var(--gold-classic); font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; margin-bottom: 8px; letter-spacing: 1px;">Banorte</p>
-                    <p style="font-size: 1.2rem; font-weight: 700; letter-spacing: 3px; color: var(--text-main);">
+                <div style="background: rgba(0, 0, 0, 0.5); padding: 25px; border-radius: 8px; border-left: 3px solid var(--amber-glow); display: inline-block; text-align: left; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);">
+                    <p style="color: var(--amber-glow); font-family: 'Prata', serif; font-size: 1.4rem; margin-bottom: 8px; letter-spacing: 1px;">Banorte</p>
+                    <p style="font-size: 1.2rem; font-weight: 700; letter-spacing: 3px; color: var(--text-light);">
                         4189 1430 9469 7771
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- SECCIÓN: GALERÍA DE FOTOS (¡NUEVO!) -->
+        <!-- SECCIÓN: LA ROCKOLA -->
         <section class="section-block reveal">
-            <h2 class="section-title">Memorias</h2>
-            <p class="section-subtitle">Momentos Inolvidables</p>
-            
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="foto1.jpg" onerror="this.src='https://placehold.co/400x500/0B132B/D4AF37?text=Memoria+1'" alt="Foto 1">
-                </div>
-                <div class="gallery-item">
-                    <img src="foto2.jpg" onerror="this.src='https://placehold.co/400x500/0B132B/D4AF37?text=Memoria+2'" alt="Foto 2">
-                </div>
-                <div class="gallery-item">
-                    <img src="foto3.jpg" onerror="this.src='https://placehold.co/400x500/0B132B/D4AF37?text=Memoria+3'" alt="Foto 3">
-                </div>
-                <div class="gallery-item">
-                    <img src="foto4.jpg" onerror="this.src='https://placehold.co/400x500/0B132B/D4AF37?text=Memoria+4'" alt="Foto 4">
-                </div>
-            </div>
-        </section>
+            <h2 class="section-title">The Playlist</h2>
+            <p class="section-subtitle">¿Qué canción suena hoy?</p>
 
-        <!-- SECCIÓN: ROCKOLA / PETICIÓN DE CANCIONES (¡MODIFICADO!) -->
-        <section class="section-block reveal">
-            <h2 class="section-title">La Rockola</h2>
-            <p class="section-subtitle">Recomienda una canción para bailar</p>
-
-            <div class="luxury-card">
+            <div class="lounge-card">
                 <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-                <p style="font-size: 0.9rem; color: var(--text-main); margin-bottom: 25px;">¿Qué canción no puede faltar en la fiesta? Déjame tu recomendación.</p>
+                <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 30px;">Comparte esa canción que no puede faltar en la lista de reproducción de la noche.</p>
                 
-                <button type="button" class="btn-gold btn-outline" style="width: 100%;" onclick="document.getElementById('rockola-container').style.display='block'; this.style.display='none';">
-                    Sugerir una canción
+                <button type="button" class="btn-amber" style="width: 100%;" onclick="document.getElementById('rockola-container').style.display='block'; this.style.display='none';">
+                    Sugerir Melodía
                 </button>
 
                 <div id="rockola-container" class="collapse-container">
                     <form id="song-form">
                         <div class="form-group">
-                            <label class="form-label">Nombre de la Canción</label>
-                            <input type="text" id="song-name" class="form-input" placeholder="Ej. El Triste" required>
+                            <label class="form-label">Título de la Canción</label>
+                            <input type="text" id="song-name" class="form-input" placeholder="Ej. Fly Me to the Moon" required>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Artista / Grupo</label>
-                            <input type="text" id="song-artist" class="form-input" placeholder="Ej. José José" required>
+                            <label class="form-label">Artista</label>
+                            <input type="text" id="song-artist" class="form-input" placeholder="Ej. Frank Sinatra" required>
                         </div>
-                        <button type="submit" class="btn-gold" style="width: 100%;">Añadir a la Playlist</button>
+                        <button type="submit" class="btn-amber" style="width: 100%; padding: 12px;">Añadir</button>
                     </form>
 
                     <div class="dynamic-list" id="song-list">
@@ -566,32 +559,32 @@
             </div>
         </section>
 
-        <!-- SECCIÓN: MURO DE LOS DESEOS (¡MODIFICADO!) -->
+        <!-- SECCIÓN: MURO DE LOS DESEOS -->
         <section class="section-block reveal">
-            <h2 class="section-title">Libro de Firmas</h2>
-            <p class="section-subtitle">Déjame un mensaje especial</p>
+            <h2 class="section-title">Un Brindis</h2>
+            <p class="section-subtitle">El libro de firmas</p>
 
-            <div class="luxury-card">
-                <p style="font-size: 0.9rem; color: var(--text-main); margin-bottom: 25px;">Me encantaría leer tus palabras y buenos deseos para esta nueva vuelta al sol.</p>
+            <div class="lounge-card">
+                <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 30px;">Será un honor leer tus palabras. Déjame un mensaje para recordar este cumpleaños.</p>
                 
-                <button type="button" class="btn-gold btn-outline" style="width: 100%;" onclick="document.getElementById('wishes-container').style.display='block'; this.style.display='none';">
-                    Escribir Mensaje
+                <button type="button" class="btn-amber" style="width: 100%;" onclick="document.getElementById('wishes-container').style.display='block'; this.style.display='none';">
+                    Escribir un Toast
                 </button>
 
                 <div id="wishes-container" class="collapse-container">
                     <form id="wish-form">
                         <div class="form-group">
-                            <label class="form-label">Tu Nombre</label>
-                            <input type="text" id="w-name" class="form-input" placeholder="Familia Pérez" required>
+                            <label class="form-label">Firmado por</label>
+                            <input type="text" id="w-name" class="form-input" placeholder="Tu nombre" required>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Tu Mensaje</label>
-                            <textarea id="w-msg" class="form-input" rows="3" placeholder="Escribe tus buenos deseos..." required style="resize: none;"></textarea>
+                            <label class="form-label">Mensaje</label>
+                            <textarea id="w-msg" class="form-input" rows="3" placeholder="Redacta tus buenos deseos..." required style="resize: none;"></textarea>
                         </div>
-                        <button type="submit" class="btn-gold" style="width: 100%;">Publicar Mensaje</button>
+                        <button type="submit" class="btn-amber" style="width: 100%; padding: 12px;">Publicar</button>
                     </form>
 
-                    <div class="dynamic-list" id="wishes-list" style="margin-top: 30px;">
+                    <div class="dynamic-list" id="wishes-list" style="margin-top: 35px;">
                         <!-- Mensajes locales -->
                     </div>
                 </div>
@@ -600,35 +593,35 @@
 
         <!-- SECCIÓN: CONFIRMACIÓN DE ASISTENCIA -->
         <section class="section-block reveal" style="padding-bottom: 100px;">
-            <h2 class="section-title">Confirmación</h2>
-            <p class="section-subtitle">Espero contar con tu presencia</p>
+            <h2 class="section-title">RSVP</h2>
+            <p class="section-subtitle">Confirmación de Asistencia</p>
 
-            <div class="luxury-card">
-                <button type="button" class="btn-gold" id="btn-reveal-rsvp" style="width: 100%;" onclick="document.getElementById('rsvp-container').style.display='block'; this.style.display='none';">
-                    Confirmar Asistencia
+            <div class="lounge-card">
+                <button type="button" class="btn-amber" id="btn-reveal-rsvp" style="width: 100%;" onclick="document.getElementById('rsvp-container').style.display='block'; this.style.display='none';">
+                    Confirmar Presencia
                 </button>
 
-                <div id="rsvp-container" style="display: none; animation: fadeInItem 0.6s ease;">
+                <div id="rsvp-container" class="collapse-container" style="margin-top: 0;">
                     <form id="rsvp-form">
                         <div class="form-group">
-                            <label class="form-label">Nombre Completo</label>
+                            <label class="form-label">Nombre del Invitado</label>
                             <input type="text" name="Nombre" id="rsvp-name" class="form-input" required>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">¿Asistirás?</label>
+                            <label class="form-label">Confirmación</label>
                             <select name="Asistencia" class="form-input" required>
-                                <option value="" disabled selected>Selecciona una opción</option>
-                                <option value="Sí asisto">Sí, será un honor</option>
-                                <option value="No asisto">No podré asistir</option>
+                                <option value="" disabled selected>Elige una opción</option>
+                                <option value="Sí asisto">Asistiré con gusto</option>
+                                <option value="No asisto">Me es imposible asistir</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn-gold" style="width: 100%;">Enviar Respuesta</button>
+                        <button type="submit" class="btn-amber" style="width: 100%;">Enviar Respuesta</button>
                     </form>
                 </div>
                 
-                <div id="rsvp-success" style="display: none; margin-top: 20px;">
-                    <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--gold-classic);">¡Gracias!</h3>
-                    <p style="font-size: 0.9rem; margin-top: 10px;">Tu respuesta ha sido registrada.</p>
+                <div id="rsvp-success" style="display: none; margin-top: 20px; text-align: center;">
+                    <h3 style="font-family: 'Prata', serif; font-size: 2.2rem; color: var(--bronze-light);">Recibido</h3>
+                    <p style="font-size: 0.95rem; margin-top: 10px; color: var(--text-muted);">Tu respuesta ha sido registrada exitosamente.</p>
                 </div>
             </div>
         </section>
@@ -642,25 +635,23 @@
         let audioInit = false;
 
         function openInvitation() {
-            document.getElementById('intro-screen').classList.add('open');
+            const intro = document.getElementById('intro-screen');
+            intro.style.opacity = '0';
+            setTimeout(() => { intro.style.visibility = 'hidden'; }, 1500);
             startAudio();
         }
 
         function startAudio() {
             if (audioInit || !audio) return;
-            // Configurar el segundo de inicio
-            audio.currentTime = 13;
+            // Configuramos inicio en seg 0 o el deseado
             audio.play().then(() => {
                 audioInit = true;
                 musicBtn.classList.add('playing');
-            }).catch(() => { console.log('Interacción requerida'); });
+            }).catch(() => { console.log('Interacción requerida para audio'); });
         }
 
         function toggleMusic() {
-            if (!audioInit) { 
-                audio.currentTime = 13;
-                audioInit = true; 
-            }
+            if (!audioInit) { audioInit = true; }
             if (audio.paused) {
                 audio.play();
                 musicBtn.classList.add('playing');
@@ -670,8 +661,8 @@
             }
         }
 
-        // --- SISTEMA DE PARTÍCULAS (POLVO DE ORO) ---
-        const canvas = document.getElementById('ambient-canvas');
+        // --- SISTEMA DE PARTÍCULAS (BRASAS CÁLIDAS / HUMO) ---
+        const canvas = document.getElementById('embers-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
 
@@ -679,38 +670,63 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             particles = [];
-            for(let i=0; i<60; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    size: Math.random() * 2 + 0.5,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: -(Math.random() * 0.5 + 0.2),
-                    alpha: Math.random()
-                });
+            for(let i=0; i<80; i++) {
+                particles.push(createEmber());
             }
         }
+
+        function createEmber() {
+            // Tonos cálidos de fuego y ámbar
+            const colors = ['#d97736', '#8c4217', '#e8a97b', '#4a1e06'];
+            return {
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height + canvas.height, // Comienzan abajo
+                size: Math.random() * 2.5 + 0.5,
+                vx: (Math.random() - 0.5) * 1,
+                vy: -(Math.random() * 1.5 + 0.5), // Suben
+                alpha: Math.random(),
+                fadeRate: (Math.random() * 0.02 + 0.005),
+                color: colors[Math.floor(Math.random() * colors.length)]
+            };
+        }
+
         initCanvas();
         window.addEventListener('resize', initCanvas);
+
+        // Efecto Interactivo: Chispas al tocar la pantalla
+        window.addEventListener('click', function(e) {
+            for(let i=0; i<15; i++) {
+                particles.push({
+                    x: e.clientX,
+                    y: e.clientY,
+                    size: Math.random() * 3 + 1,
+                    vx: (Math.random() - 0.5) * 8,
+                    vy: (Math.random() - 0.5) * 8,
+                    alpha: 1,
+                    fadeRate: 0.03,
+                    color: Math.random() > 0.5 ? '#d97736' : '#e8a97b'
+                });
+            }
+        });
 
         function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             for(let i = 0; i < particles.length; i++) {
                 let p = particles[i];
-                p.x += p.vx;
+                p.x += Math.sin(p.y * 0.02) * 0.5 + p.vx; // Movimiento oscilante como humo
                 p.y += p.vy;
-                p.alpha += (Math.random() - 0.5) * 0.02;
+                p.alpha -= p.fadeRate * 0.2; // Se desvanecen lentamente
                 
-                if(p.alpha <= 0.1) p.alpha = 0.1;
-                if(p.alpha >= 0.8) p.alpha = 0.8;
-                if(p.y < 0) p.y = canvas.height;
-                if(p.x < 0) p.x = canvas.width;
-                if(p.x > canvas.width) p.x = 0;
+                if(p.alpha <= 0 || p.y < -10) {
+                    particles[i] = createEmber();
+                    particles[i].y = canvas.height + 10;
+                    particles[i].x = Math.random() * canvas.width;
+                }
 
-                ctx.globalAlpha = p.alpha;
-                ctx.fillStyle = '#D4AF37';
-                ctx.shadowBlur = 5;
-                ctx.shadowColor = '#D4AF37';
+                ctx.globalAlpha = Math.max(0, p.alpha);
+                ctx.fillStyle = p.color;
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = p.color;
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
                 ctx.fill();
@@ -725,10 +741,11 @@
             for (let i = 0; i < reveals.length; i++) {
                 let windowHeight = window.innerHeight;
                 let elementTop = reveals[i].getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) { reveals[i].classList.add('active'); }
+                if (elementTop < windowHeight - 80) { reveals[i].classList.add('active'); }
             }
         }
         window.addEventListener('scroll', revealElements);
+        setTimeout(revealElements, 1000); // Trigger initial checks
 
         // --- ENLACES PERSONALIZADOS ---
         document.addEventListener("DOMContentLoaded", () => {
@@ -748,12 +765,63 @@
         const songForm = document.getElementById('song-form');
         const songList = document.getElementById('song-list');
 
+        // --- SISTEMA DE GLOBOS FLOTANTES ---
+        function createSideBalloons() {
+            const container = document.getElementById('side-balloons-container');
+            if(!container) return;
+
+            function spawnBalloon(forceSide) {
+                const wrap = document.createElement('div');
+                wrap.className = 'rising-balloon-wrap';
+                
+                // Distribución en márgenes (5-15% izquierda o 85-95% derecha)
+                const isLeft = forceSide !== undefined ? forceSide : Math.random() > 0.5;
+                const posX = isLeft ? (Math.random() * 10 + 2) : (Math.random() * 10 + 85);
+                wrap.style.left = posX + 'vw';
+                
+                const scale = Math.random() * 0.4 + 0.5; 
+                const duration = Math.random() * 10 + 12; 
+                wrap.style.animationDuration = duration + 's';
+                
+                // Variación de colores Ámbar / Cobre Oscuro
+                const isCopper = Math.random() > 0.5;
+                const colorLight = isCopper ? '#e8a97b' : '#c49a7a';
+                const colorBase = isCopper ? '#d97736' : '#8c4217';
+                const colorDark = isCopper ? '#8c4217' : '#241913';
+                const uid = Math.random().toString(36).substr(2, 5);
+
+                wrap.innerHTML = `
+                    <svg width="${60 * scale}" height="${150 * scale}" viewBox="0 0 60 150" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <radialGradient id="grad_${uid}" cx="35%" cy="30%" r="70%">
+                                <stop offset="0%" stop-color="#ffffff"/>
+                                <stop offset="20%" stop-color="${colorLight}"/>
+                                <stop offset="70%" stop-color="${colorBase}"/>
+                                <stop offset="100%" stop-color="${colorDark}"/>
+                            </radialGradient>
+                        </defs>
+                        <path d="M30 75 Q 25 110 35 150" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none"/>
+                        <polygon points="27,73 33,73 30,77" fill="${colorDark}"/>
+                        <ellipse cx="30" cy="40" rx="28" ry="35" fill="url(#grad_${uid})"/>
+                    </svg>
+                `;
+
+                container.appendChild(wrap);
+                setTimeout(() => wrap.remove(), duration * 1000);
+            }
+
+            // Iniciar globos
+            for(let i=0; i<6; i++) { setTimeout(() => spawnBalloon(i%2===0), i*1500); }
+            setInterval(() => spawnBalloon(), 3000);
+        }
+        createSideBalloons();
+
         function loadSongs() {
-            const songs = JSON.parse(localStorage.getItem('miguel_navy_songs')) || [];
+            const songs = JSON.parse(localStorage.getItem('62_whiskey_songs')) || [];
             songList.innerHTML = songs.map(s => `
                 <div class="list-item">
-                    <span style="display:block; color:var(--gold-classic); font-weight:600; font-size:1rem;">🎵 ${s.title}</span>
-                    <span style="font-size:0.8rem; color:var(--text-muted);">Por: ${s.artist}</span>
+                    <span style="display:block; color:var(--amber-glow); font-family:'Prata',serif; font-size:1.1rem; margin-bottom:5px;">${s.title}</span>
+                    <span style="font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">${s.artist}</span>
                 </div>
             `).join('');
         }
@@ -763,9 +831,9 @@
             e.preventDefault();
             const title = document.getElementById('song-name').value;
             const artist = document.getElementById('song-artist').value;
-            const songs = JSON.parse(localStorage.getItem('miguel_navy_songs')) || [];
+            const songs = JSON.parse(localStorage.getItem('62_whiskey_songs')) || [];
             songs.unshift({ title, artist });
-            localStorage.setItem('miguel_navy_songs', JSON.stringify(songs));
+            localStorage.setItem('62_whiskey_songs', JSON.stringify(songs));
             loadSongs();
             songForm.reset();
         });
@@ -775,11 +843,11 @@
         const wishesList = document.getElementById('wishes-list');
 
         function loadWishes() {
-            const wishes = JSON.parse(localStorage.getItem('miguel_navy_wishes')) || [];
+            const wishes = JSON.parse(localStorage.getItem('62_whiskey_wishes')) || [];
             wishesList.innerHTML = wishes.map(w => `
                 <div class="list-item">
-                    <span style="display:block; font-family:'Cormorant Garamond', serif; font-size:1.3rem; color:var(--gold-classic);">${w.name}</span>
-                    <span style="display:block; font-size:0.9rem; margin-top:5px; font-style:italic;">"${w.msg}"</span>
+                    <span style="display:block; font-family:'Prata', serif; font-size:1.3rem; color:var(--bronze-light); margin-bottom:8px;">${w.name}</span>
+                    <span style="display:block; font-size:0.95rem; color:var(--text-light); line-height:1.5;">"${w.msg}"</span>
                 </div>
             `).join('');
         }
@@ -789,21 +857,20 @@
             e.preventDefault();
             const name = document.getElementById('w-name').value;
             const msg = document.getElementById('w-msg').value;
-            const wishes = JSON.parse(localStorage.getItem('miguel_navy_wishes')) || [];
+            const wishes = JSON.parse(localStorage.getItem('62_whiskey_wishes')) || [];
             wishes.unshift({ name, msg });
-            localStorage.setItem('miguel_navy_wishes', JSON.stringify(wishes));
+            localStorage.setItem('62_whiskey_wishes', JSON.stringify(wishes));
             loadWishes();
             wishForm.reset();
         });
 
-        // --- FORMULARIO RSVP (Simulado para catálogo, preparable para Google Sheets) ---
+        // --- FORMULARIO RSVP (Simulado) ---
         document.getElementById('rsvp-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const btn = this.querySelector('button');
             btn.innerText = "ENVIANDO...";
             btn.disabled = true;
 
-            // Simulación de envío (Aquí va el Fetch de Google Sheets cuando tengas el link)
             setTimeout(() => {
                 document.getElementById('rsvp-container').style.display = 'none';
                 document.getElementById('rsvp-success').style.display = 'block';
@@ -812,4 +879,4 @@
 
     </script>
 </body>
-</html>
+</html> 
